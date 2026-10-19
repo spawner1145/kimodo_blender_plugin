@@ -1,6 +1,8 @@
-# Kimodo API Bridge（简体中文）
+# Kimodo API Bridge
 
-独立 Blender 插件，基于 Lewdineer 的 Kimodo Blender Bridge，采用 GPL-2.0-or-later。无需在 Blender 内安装 Kimodo、PyTorch 或文本编码器。
+独立 Blender 插件，基于 Lewdineer 的 Kimodo Blender Bridge，采用 GPL-2.0-or-later
+
+需要先在https://github.com/spawner1145/kimodo_inference_server这个项目部署并开启api对接使用
 
 1. 先启动 `inference_server` 中的服务。
 2. 在 Blender 的 3D 视图按 **N → Kimodo → 连接**。
@@ -23,7 +25,6 @@ API 地址和令牌保存在插件偏好设置，不会写入 .blend。生成参
 本机安装模块沿用 `kimodo_blender_bridge`，更新时替换原插件，不要同时启用旧版本与本版本。便携安装包中的顶层目录也使用此模块名。
 
 原项目：https://github.com/lewdineer/Kimodo_Blender_Bridge
-翻译参考：https://github.com/weilin9999/WeiLin-Comfyui-Tools
 
 ## 上传 GitHub
 
