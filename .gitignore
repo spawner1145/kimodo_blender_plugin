@@ -1,0 +1,47 @@
+__pycache__/
+*.py[cod]
+
+# Blender runtime files, local settings and credentials
+*.blend
+*.blend[0-9]*
+*.bvh
+*.log
+*.tmp
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+/config.local*.json
+
+# Development environments, caches and editor settings
+.venv/
+.venv-*/
+venv/
+env/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Generated output, model weights and release packages
+/data/
+/models/
+/outputs/
+/backups/
+/build/
+/dist/
+*.egg-info/
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.gguf
+*.zip
+*.7z
