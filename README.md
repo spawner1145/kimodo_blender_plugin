@@ -2,7 +2,9 @@
 
 独立 Blender 插件，基于 Lewdineer 的 Kimodo Blender Bridge，采用 GPL-2.0-or-later
 
-需要先在[kimodo_inference_server](https://github.com/spawner1145/kimodo_inference_server)这个项目部署并开启api对接使用BVH 导入器已随插件内置，无需再安装或启用其他 BVH 扩展；见 `vendor/README.md`。
+需要先在[kimodo_inference_server](https://github.com/spawner1145/kimodo_inference_server)这个项目部署并开启api对接使用
+
+BVH 导入器已随插件内置，无需再安装或启用其他 BVH 扩展；见 `vendor/README.md`。
 
 1. 先启动 `kimodo_inference_server` 中的服务。
 2. 在 Blender 的 3D 视图按 **N → Kimodo → 连接**。
