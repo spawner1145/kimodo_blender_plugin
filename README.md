@@ -1,6 +1,8 @@
-# Kimodo API Bridge（简体中文）
+# Kimodo API Bridge
 
-独立 Blender 插件，基于 Lewdineer 的 Kimodo Blender Bridge，采用 GPL-2.0-or-later。无需在 Blender 内安装 Kimodo、PyTorch 或文本编码器。BVH 导入器已随插件内置，无需再安装或启用其他 BVH 扩展；见 `vendor/README.md`。
+独立 Blender 插件，基于 Lewdineer 的 Kimodo Blender Bridge，采用 GPL-2.0-or-later
+
+需要先在[kimodo_inference_server](https://github.com/spawner1145/kimodo_inference_server)这个项目部署并开启api对接使用BVH 导入器已随插件内置，无需再安装或启用其他 BVH 扩展；见 `vendor/README.md`。
 
 1. 先启动 `kimodo_inference_server` 中的服务。
 2. 在 Blender 的 3D 视图按 **N → Kimodo → 连接**。
@@ -23,7 +25,6 @@ API 地址和令牌保存在插件偏好设置，不会写入 .blend。生成参
 安装模块名为 `kimodo_blender_plugin`。更新时替换同名插件；若之前安装过 `kimodo_blender_bridge` 或原版 Bridge，请先禁用，避免重复注册操作符。
 
 原项目：https://github.com/lewdineer/Kimodo_Blender_Bridge
-翻译参考：https://github.com/weilin9999/WeiLin-Comfyui-Tools
 
 ## 上传 GitHub
 
