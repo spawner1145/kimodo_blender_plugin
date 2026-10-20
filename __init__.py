@@ -8,7 +8,7 @@ Based on Lewdineer's Kimodo Blender Bridge, GPL-2.0-or-later.
 bl_info = {
     "name":        "Kimodo API Bridge",
     "author":      "Lewdineer",
-    "version":     (2, 1, 0),
+    "version":     (2, 1, 1),
     "blender":     (4, 2, 0),
     "location":    "View3D › Sidebar (N-Panel) › Kimodo",
     "description": "Generate motion through a configurable Kimodo HTTP API, with Chinese prompt translation",

@@ -6,7 +6,6 @@ All bpy.ops.kimodo.* operators.
 from .translations import tr
 
 import bpy
-import addon_utils
 import os
 import math
 import json
@@ -25,68 +24,19 @@ from . import constraints as cmod
 # BVH importer compatibility (Blender 5.0+)
 # ---------------------------------------------------------------------------
 
-def _bvh_operator_registered() -> bool:
-    """True only when import_anim.bvh is actually registered.
-
-    Note: ``hasattr(bpy.ops.import_anim, "bvh")`` is useless for this — bpy.ops
-    resolves lazily and always returns a wrapper, so it reports True even when
-    the operator does not exist. A registered operator, however, gets a real
-    type ``bpy.types.IMPORT_ANIM_OT_bvh``, so check for that instead.
-    """
-    return hasattr(bpy.types, "IMPORT_ANIM_OT_bvh")
-
-
-def _ensure_bvh_importer() -> bool:
-    """Make sure bpy.ops.import_anim.bvh is registered, enabling it if needed.
-
-    Blender 5.0+ ships the legacy BVH importer (io_anim_bvh) disabled by
-    default, so the operator is missing on a fresh install and calling it
-    raises "could not be found". Enable it on demand. Returns True if the
-    operator is available afterwards.
-    """
-    if _bvh_operator_registered():
-        return True
-
-    # Try the plain bundled module name first, then any extension-namespaced
-    # variant (e.g. "bl_ext.blender_org.io_anim_bvh") discovered at runtime.
-    candidates = ["io_anim_bvh"]
-    try:
-        candidates += [
-            m.__name__ for m in addon_utils.modules()
-            if m.__name__ != "io_anim_bvh" and m.__name__.endswith("io_anim_bvh")
-        ]
-    except Exception:
-        pass
-
-    for module_name in candidates:
-        try:
-            addon_utils.enable(module_name, default_set=True, persistent=True)
-        except Exception:
-            continue
-        if _bvh_operator_registered():
-            return True
-
-    return _bvh_operator_registered()
-
-
 def _import_bvh(**kwargs):
-    """Import a BVH file, self-healing a missing/disabled importer add-on.
-
-    Raises RuntimeError with an actionable message if the importer cannot be
-    made available, so callers can report it cleanly instead of leaking a
-    cryptic operator traceback.
-    """
-    if not _ensure_bvh_importer():
-        raise RuntimeError(
-            "Blender's BVH importer is not available. Enable "
-            "'Import-Export: BioVision Motion Capture (BVH)' under "
-            "Edit > Preferences > Add-ons (search 'BVH'). On Blender 5.0+ you "
-            "may need to install it from Get Extensions first."
-        )
+    """Use the bundled importer without enabling or downloading other add-ons."""
+    from bpy_extras.io_utils import axis_conversion
+    from .vendor import import_bvh
+    forward = kwargs.pop('axis_forward', '-Z')
+    up = kwargs.pop('axis_up', 'Y')
+    kwargs['global_matrix'] = axis_conversion(from_forward=forward, from_up=up).to_4x4()
     try:
-        return bpy.ops.import_anim.bvh(**kwargs)
+        result = import_bvh.load(bpy.context, **kwargs)
+        if result != {'FINISHED'}:
+            raise RuntimeError('BVH importer cancelled')
+        return result
     except (AttributeError, RuntimeError) as e:
-        # Operator vanished between the check and the call, or import failed.
         raise RuntimeError(f"BVH import failed: {e}")
 
 

@@ -1,8 +1,8 @@
 # Kimodo API Bridge（简体中文）
 
-独立 Blender 插件，基于 Lewdineer 的 Kimodo Blender Bridge，采用 GPL-2.0-or-later。无需在 Blender 内安装 Kimodo、PyTorch 或文本编码器。
+独立 Blender 插件，基于 Lewdineer 的 Kimodo Blender Bridge，采用 GPL-2.0-or-later。无需在 Blender 内安装 Kimodo、PyTorch 或文本编码器。BVH 导入器已随插件内置，无需再安装或启用其他 BVH 扩展；见 `vendor/README.md`。
 
-1. 先启动 `inference_server` 中的服务。
+1. 先启动 `kimodo_inference_server` 中的服务。
 2. 在 Blender 的 3D 视图按 **N → Kimodo → 连接**。
 3. 填写 **API 地址**，本机默认 `http://127.0.0.1:6600`；远程服务器填写它的地址。服务端启用认证时填写相同的 **API 令牌**。
 
@@ -20,13 +20,19 @@ API 地址和令牌保存在插件偏好设置，不会写入 .blend。生成参
 
 中文界面跟随 Blender 的简体中文界面翻译开关；词条在 `locales/zh_HANS.json`。中译英参考 WeiLin-Comfyui-Tools，使用阿里巴巴网页翻译，失败后尝试有道，无需 API Key；在线接口可能变更或限流。点击翻译时才发送提示词，支持全部片段翻译和还原中文。
 
-本机安装模块沿用 `kimodo_blender_bridge`，更新时替换原插件，不要同时启用旧版本与本版本。便携安装包中的顶层目录也使用此模块名。
+安装模块名为 `kimodo_blender_plugin`。更新时替换同名插件；若之前安装过 `kimodo_blender_bridge` 或原版 Bridge，请先禁用，避免重复注册操作符。
 
 原项目：https://github.com/lewdineer/Kimodo_Blender_Bridge
 翻译参考：https://github.com/weilin9999/WeiLin-Comfyui-Tools
 
 ## 上传 GitHub
 
-本文件夹可作为独立插件仓库上传。保留 `.gitignore`、全部 Python 源码、`locales/zh_HANS.json`、README 和许可文件；`.gitignore` 已排除 Python 缓存、虚拟环境、Blender 工程及备份、生成动画、模型、日志、本机凭据与打包文件。发布给 Blender 安装的 ZIP 应以 `kimodo_blender_bridge/` 为顶层目录；若直接复制安装，将本目录复制并命名为 `kimodo_blender_bridge`，放入 Blender 的 `scripts/addons` 后启用。
+本文件夹可作为独立插件仓库上传。保留 `.gitignore`、全部 Python 源码、`locales/zh_HANS.json`、README 和许可文件；`.gitignore` 已排除 Python 缓存、虚拟环境、Blender 工程及备份、生成动画、模型、日志、本机凭据与打包文件。发布给 Blender 安装的 ZIP 应以 `kimodo_blender_plugin/` 为顶层目录，并包含 `vendor/`；若直接复制安装，将本目录放入 Blender 的 `scripts/addons` 后启用。
 
 模型下载由服务端 WebUI 管理；ConvRot INT8 已预设为公开 ModelScope 仓库，无需把权重放入插件仓库。
+
+独立 BVH 导入验证（在本插件文件夹执行，无需运行服务端）：
+
+```text
+blender --background --factory-startup --python-exit-code 1 --python test_import_blender.py
+```
